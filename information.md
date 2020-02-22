@@ -1,0 +1,160 @@
+# javascript topics 
+## spread and rest operator
+
+```js
+const array1 = ["mick", "jery", "catlyn"];
+
+const array2 = [...array1, "bill"];
+
+console.log(array2);
+
+function call(...args){
+    args.forEach(el =>{
+        console.log(el);
+    })
+}
+
+call(2, 5, 6, 8);
+
+```
+
+# react principles
+
+## importing 
+
+```js
+
+import {combine} from './combine'
+import {combine as bine} from './combine'
+import {* as group} from './combine'
+
+```
+
+## creating a react project
+
+- npm install -g create-react-app
+- npx create-react-app appname
+
+
+# styling react components
+
+## flexibel way to style components
+
+create an if statement inside render() to check couple of statements
+to easily manipulate css while the virtual dom is being rerendered 
+
+```js
+
+const classNameArray = [];
+
+if(this.state.name.length <= 2){
+    classNameArray.push("red");
+}
+
+render(){
+    return(
+        <h1 className={classNameArray.join('')}>Home Section</h1>
+    )
+}
+
+```
+
+## inline css and general inline styling
+
+normally you cant apply pseudo selectors inside jsx.
+this is practically the limit of inline css inside jsx.
+
+```js 
+
+render(){
+
+    const styling = {
+        backgroundColor: 'green',
+        fontFamily: 'Helvetica Neue'
+    }
+
+}
+
+```
+
+but with a npm package your are allowed to use functionalities like pseude selectors inside jsx!
+
+- install radium: npm install --save radium
+
+```js 
+
+import Radium from 'radium';
+
+// your class App 
+
+export default Radium(App);
+
+```
+
+Radium is an higher order function which will inject new functionalities into App.
+
+inline css with radium:
+
+```js 
+
+render(){
+
+    const styling = {
+        backgroundColor: 'green',
+        fontFamily: 'Helvetica Neue',
+        ':hover': {
+            backgroundColor: 'purple',
+            fontSize: '12px'
+        }
+    }
+
+    styling[':hover'] = {
+        backgroundColor: 'midnightblue'
+    }
+
+}
+
+```
+
+## media queries with radium
+
+in order to use media queries you need to import StyleRoot from the radium package and
+afterwards wrap your jsx inside the main class app with the StyleRoot element
+
+
+```js 
+
+import Radium, {StyleRoot} from 'radium';
+
+// your class App 
+
+render(){
+
+    // define media queries
+    const mediaQueries = {
+        '@media(min-width: 500px)' :{
+            backgroundColor: 'orange'
+        }
+    }
+
+    return(
+
+        <StyleRoot>
+            <div>
+                <h1 style = {mediaQueries}></h1>
+            </div>    
+        </StyleRoot>
+    )
+}
+
+export default Radium(App);
+
+```
+
+
+
+
+
+
+
+
