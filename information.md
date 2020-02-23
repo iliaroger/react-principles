@@ -151,6 +151,84 @@ export default Radium(App);
 
 ```
 
+## inline styling with styled-components
+
+install: npm i --save styled-components
+
+```js 
+
+import styled from 'styled-components';
+
+// your class App 
+
+render(){
+
+    // define media queries
+    const DivElement = styled.div 
+    `
+        background-color: yellow;
+        font-family: default;
+
+        @media(min-width: 500px) {
+            background-color: 'orange';
+            font-size: 60px;
+            width: 60%;
+        }
+    `
+        
+    return(
+
+        <DivElement>
+            <div>
+                <h1 style = {DivElements}></h1>
+            </div>    
+        </DivElement>
+    )
+}
+
+export default App;
+
+```
+
+note: styled component converts the written inline css to a class and not just like in radium, to inline css.
+
+you can also insert props into your own css style and check for certain conditions:
+
+```js 
+
+import styled from 'styled-components';
+
+// your class App 
+
+render(){
+
+    // define media queries
+    const DivElement = styled.div 
+    `
+        background-color: ${props => props.nameCheck === 'Rickart' ? 'green' : 'yellow' };
+        font-family: default;
+
+        @media(min-width: 500px) {
+            background-color: 'orange';
+            font-size: 60px;
+            width: 60%;
+        }
+    `
+        
+    return(
+
+        <DivElement nameCheck = {this.persons[0].name}>
+            <div>
+                <h1></h1>
+            </div>    
+        </DivElement>
+    )
+}
+
+export default App;
+
+```
+
 
 
 
