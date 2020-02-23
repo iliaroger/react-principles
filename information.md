@@ -18,6 +18,22 @@ call(2, 5, 6, 8);
 
 ```
 
+## returning array elements with .map()
+
+with map you can loop through the array and easily display array elements without mutating the original array.
+
+```js 
+
+render(){
+    return(
+        this.props.persons.map(elements => {
+            <li>{elements.name}</li>
+        })
+    )
+}
+
+```
+
 # react principles
 
 ## importing 
@@ -329,6 +345,16 @@ export default App;
 wrap the `ErrorBoundry` element around the area where an error might occur. in this case, clicking the button and await data might cause an unexpected error which will be caught by the error boundry component. 
 
 # components and react internals in detail 
+
+note: always use a good project structure. for example: assets(folder), components(folder), containers(folder).
+containers consist of the main app.js file, the main css file and the app.test.js file.
+
+- you should not use states in every component. try to manage states in just a couple of components or classes.
+- in the past, you could use only classes for statemanagment. but with the introduction of react hooks you could also incoperate them into functions and manage state within functions. both approaches are valid. older projects (before the introduction of react hooks) couldn't be made without the class based approach
+
+### component creation
+
+- during the process of creating a component, react will call functions sequentially. this process of calling said functions can be used to extend the control of component creation. for example, you could fetch data from your database after the 
 
 
 
