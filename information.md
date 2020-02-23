@@ -271,10 +271,9 @@ whilst debugging your application
 
 to prevent a full crash of your application or just prevent unexpected error messages from appearing, you can create error boundries (which are technically just components) and use them to catch errors 
 
-1. create an component 
+1. create a component 
 
 ``` js 
-
 import React, {Component} from 'react';
 
 class ErrorBoundry extends Component {
@@ -295,17 +294,39 @@ class ErrorBoundry extends Component {
                 return <h1>{this.state.errorMessage}</h1>
             }
             else{
-                
+                return null;
             }
     }
 
 }
-
 export default ErrorBoundry;
-
 ``` 
+2. import the component and wrap it around where an error might occur 
 
+```js 
 
+import classes from './main.module.css';
+import ErrorBoundry from './ErrorBoundry'
+
+// your class App 
+
+render(){
+ 
+    return(
+
+        <ErrorBoundry>
+            <div>
+                <h1 style = {classes.h1}></h1>
+                <button>Get Data</button>
+            </div>    
+        </ErrorBoundry>
+    )
+}
+
+export default App;
+
+```
+wrap the `ErrorBoundry` element around the area where an error might occur. in this case, clicking the button and await data might cause an unexpected error which will be caught by the error boundry component. 
 
 
 
