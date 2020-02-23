@@ -229,6 +229,81 @@ export default App;
 
 ```
 
+## css module styling
+
+in order to use css seperately from multiple files and still apply classes to components without 
+the stress and hustle to create unique class names, you can use css modules to make it happen
+
+- css files must contain the keyword `module`. for example: main.module.css 
+
+```js 
+
+import classes from './main.module.css';
+
+// your class App 
+
+render(){
+ 
+    return(
+
+        <DivElement>
+            <div>
+                <h1 style = {classes.h1}></h1>
+            </div>    
+        </DivElement>
+    )
+}
+
+export default App;
+
+```
+
+note: if you are using an older version of react, you need manually to setup the class module settings inside 
+the `webpack.config` files.
+
+# debugging react apps
+
+- chrome debugger tools can help find tricky logical errors inside your app (chrome dev tools -> sources tab -> create breakpoints)
+- another great tool is: react developer tools from chrome (extension). install it and use it in the arrow drop down menu
+whilst debugging your application
+
+## error boundries
+
+to prevent a full crash of your application or just prevent unexpected error messages from appearing, you can create error boundries (which are technically just components) and use them to catch errors 
+
+1. create an component 
+
+``` js 
+
+import React, {Component} from 'react';
+
+class ErrorBoundry extends Component {
+    state = {
+        hasError: false,
+        errorMessage: ''
+    }
+
+    componentDidCatch(error, info) =>{
+        this.setState({
+            hasError: true,
+            errorMessage: error
+        })
+    }
+
+    render(){
+            if(this.state.hasError){
+                return <h1>{this.state.errorMessage}</h1>
+            }
+            else{
+                
+            }
+    }
+
+}
+
+export default ErrorBoundry;
+
+``` 
 
 
 
