@@ -328,6 +328,8 @@ export default App;
 ```
 wrap the `ErrorBoundry` element around the area where an error might occur. in this case, clicking the button and await data might cause an unexpected error which will be caught by the error boundry component. 
 
+# components and react internals in detail 
+
 
 
 
