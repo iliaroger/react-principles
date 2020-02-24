@@ -499,8 +499,61 @@ class App extends Component{
 
 ## react.fragment 
 
+react fragment is basically the same like aux but it is built inside react. 
 
+```js 
+import React, {Component} from 'react';
+import Aux from '../hoc/auxiliary';
 
+class App extends Component{
+
+    render(){
+        return(
+            <React.Fragment>
+                <h1></h1>
+            </React.Fragment>
+
+            <React.Fragment>
+                <h1></h1>
+            </React.Fragment>
+        )
+    }
+
+}
+```
+
+## higher order component class wrapper 
+
+with a higher order component you are able to create a component that would wrap around jsx with some functionalities. a good use case would be to create a wrap component that would catch errors that happen from within the wrapper. in this case the hoc will wrap jsx and also apply some custom css to it.  
+
+```js 
+// classWrapper.js
+import React from 'react';
+
+const classWrapper = props => {
+    <div classes={props.classes}>{props.children}</div>
+}
+
+export default classWrapper;
+
+// app.js
+import React, {Component} from 'react';
+import styles from './styles/classStyle.css'
+import WithClass from '../hoc/classWrapper';
+
+class App extends Component{
+
+    render(){
+        return(
+            <WithClass classes={styles}>
+                <h1></h1>
+            </WithClass>
+        )
+    }
+
+}
+
+```
 
 
 
