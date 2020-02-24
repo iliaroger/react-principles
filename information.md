@@ -355,6 +355,73 @@ class Person extends Component {
 }
 ```
 
+the update lifecycle will go through certain methods and then rerender the virtual dom. to create a hook and affect the update lifecycle inside a component, you need to call the lifesycle methods inside the component and apply your own custom functionalities inside them.
+
+- componentDidUpdate() is one of the most used methods
+
+### useEffect() for function components 
+
+```js 
+import React, {useEffect} from 'react';
+
+const Person = (props)=>{
+
+    useEffect(()=>{
+        console.log('use effect method triggered');
+    })
+
+    return(
+
+    )
+}
+```
+
+- inside a function component the useEffect() is the second most important function after setState(). it is basically triggered every time after a render cycle and is the equivalent compared to componentDidMount() and componentDidUpdate() methods inside the class component that are triggered sequentially. 
+- to control when exactly the useEffect() is being triggered, you need to pass a second argument into the function. more specifically, you need to pass an array with the information, that will be changed. if the element inside the array is changed then a rerender will occure. if the data stays the same it will not invoke the method.
+- if you want to invoke the useEffect() only once in the beginning of the cycle you need to pass an empty array as the second argument
+- you can call useEffect() multiple times inside an a function component 
+
+```js 
+import React, {useEffect} from 'react';
+
+const Person = (props)=>{
+
+    useEffect(()=>{
+        console.log('use effect method triggered');
+    }, []) // will be invoked once in the beginning 
+
+    useEffect(()=>{
+        console.log('use effect method triggered');
+    }, [props.name]) // will only be invoked if the props.name will be changed 
+
+    return(
+
+    )
+}
+```
+
+in order to add functionalities after a component was removed from the dom you can simply insert a return statement inside the useEffect().
+
+```js 
+import React, {useEffect} from 'react';
+
+const Person = (props)=>{
+
+    useEffect(()=>{
+        console.log('use effect method triggered');
+        return () =>{
+            // add functionalities after the component was removed
+        }
+    }, [])
+
+    return(
+
+    )
+}
+```
+
+in this case above, the removed component function will be only called if the second argument of useEffect() is an empty array. otherwise (if the array would have elements inside it) the clean up function would be called every update. 
+
 
 
 
