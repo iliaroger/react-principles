@@ -467,7 +467,7 @@ export default App;
 
 ## auxiliary wrapper for multiple adjacent html elements
 
-create a folder called 'hoc' (higher order component) and create a file called `auxiliary.js`. aux.js is not a valid name because its reserved for windows (aux is a reserved name). with this you are able to have multiple divs inside the Aux component and not receiving any error messages. 
+create a folder called 'hoc' (higher order component) and create a file called `auxiliary.js`. aux.js is not a valid name because its reserved for windows (aux is a reserved name). the aux components are basically replacing divs. you can return multiple aux elements and seperate your code without receiving any type of error message.
 
 ```js 
 // auxiliary.js file
@@ -481,17 +481,23 @@ import React, {Component} from 'react';
 import Aux from '../hoc/auxiliary';
 
 class App extends Component{
-    <Aux>
-        <div>
-            <h1></h1>
-        </div>
 
-        <div>
-            <h1></h1>
-        </div>
-    </Aux>
+    render(){
+        return(
+            <Aux>
+                <h1></h1>
+            </Aux>
+
+            <Aux>
+                <h1></h1>
+            </Aux>
+        )
+    }
+
 }
 ```
+
+## react.fragment 
 
 
 
