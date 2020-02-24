@@ -15,7 +15,6 @@ function call(...args){
 }
 
 call(2, 5, 6, 8);
-
 ```
 
 ## returning array elements with .map()
@@ -23,15 +22,13 @@ call(2, 5, 6, 8);
 with map you can loop through the array and easily display array elements without mutating the original array.
 
 ```js 
-
 render(){
     return(
         this.props.persons.map(elements => {
-            <li>{elements.name}</li>
+            return <li>{elements.name}</li>
         })
     )
 }
-
 ```
 
 # react principles
@@ -39,11 +36,9 @@ render(){
 ## importing 
 
 ```js
-
 import {combine} from './combine'
 import {combine as bine} from './combine'
 import {* as group} from './combine'
-
 ```
 
 ## creating a react project
@@ -60,7 +55,6 @@ create an if statement inside render() to check couple of statements
 to easily manipulate css while the virtual dom is being rerendered 
 
 ```js
-
 const classNameArray = [];
 
 if(this.state.name.length <= 2){
@@ -72,7 +66,6 @@ render(){
         <h1 className={classNameArray.join('')}>Home Section</h1>
     )
 }
-
 ```
 
 ## inline css and general inline styling
@@ -81,7 +74,6 @@ normally you cant apply pseudo selectors inside jsx.
 this is practically the limit of inline css inside jsx.
 
 ```js 
-
 render(){
 
     const styling = {
@@ -90,7 +82,6 @@ render(){
     }
 
 }
-
 ```
 
 but with a npm package your are allowed to use functionalities like pseude selectors inside jsx!
@@ -98,13 +89,11 @@ but with a npm package your are allowed to use functionalities like pseude selec
 - install radium: npm install --save radium
 
 ```js 
-
 import Radium from 'radium';
 
 // your class App 
 
 export default Radium(App);
-
 ```
 
 Radium is an higher order function which will inject new functionalities into App.
@@ -112,7 +101,6 @@ Radium is an higher order function which will inject new functionalities into Ap
 inline css with radium:
 
 ```js 
-
 render(){
 
     const styling = {
@@ -129,7 +117,6 @@ render(){
     }
 
 }
-
 ```
 
 ## media queries with radium
@@ -139,7 +126,6 @@ afterwards wrap your jsx inside the main class app with the StyleRoot element
 
 
 ```js 
-
 import Radium, {StyleRoot} from 'radium';
 
 // your class App 
@@ -164,7 +150,6 @@ render(){
 }
 
 export default Radium(App);
-
 ```
 
 ## inline styling with styled-components
@@ -172,7 +157,6 @@ export default Radium(App);
 install: npm i --save styled-components
 
 ```js 
-
 import styled from 'styled-components';
 
 // your class App 
@@ -203,7 +187,6 @@ render(){
 }
 
 export default App;
-
 ```
 
 note: styled component converts the written inline css to a class and not just like in radium, to inline css.
@@ -211,7 +194,6 @@ note: styled component converts the written inline css to a class and not just l
 you can also insert props into your own css style and check for certain conditions:
 
 ```js 
-
 import styled from 'styled-components';
 
 // your class App 
@@ -242,7 +224,6 @@ render(){
 }
 
 export default App;
-
 ```
 
 ## css module styling
@@ -253,7 +234,6 @@ the stress and hustle to create unique class names, you can use css modules to m
 - css files must contain the keyword `module`. for example: main.module.css 
 
 ```js 
-
 import classes from './main.module.css';
 
 // your class App 
@@ -271,7 +251,6 @@ render(){
 }
 
 export default App;
-
 ```
 
 note: if you are using an older version of react, you need manually to setup the class module settings inside 
@@ -317,10 +296,10 @@ class ErrorBoundry extends Component {
 }
 export default ErrorBoundry;
 ``` 
+
 2. import the component and wrap it around where an error might occur 
 
 ```js 
-
 import classes from './main.module.css';
 import ErrorBoundry from './ErrorBoundry'
 
@@ -340,7 +319,6 @@ render(){
 }
 
 export default App;
-
 ```
 wrap the `ErrorBoundry` element around the area where an error might occur. in this case, clicking the button and await data might cause an unexpected error which will be caught by the error boundry component. 
 
@@ -352,9 +330,33 @@ containers consist of the main app.js file, the main css file and the app.test.j
 - you should not use states in every component. try to manage states in just a couple of components or classes.
 - in the past, you could use only classes for statemanagment. but with the introduction of react hooks you could also incoperate them into functions and manage state within functions. both approaches are valid. older projects (before the introduction of react hooks) couldn't be made without the class based approach
 
-### component creation
+### component creation lifecycle
 
-- during the process of creating a component, react will call functions sequentially. this process of calling said functions can be used to extend the control of component creation. for example, you could fetch data from your database after the 
+- during the process of creating a component, react will call functions sequentially. this process of calling said functions can be used to extend the control of component manipulation. for example, you could fetch data from your database after the componentDidMount() was invoked. this simply gives you more control over the whole process behind the scenes. 
+
+### update lifecycle 
+
+```js 
+import React, {Component} from 'react';
+
+class Person extends Component {
+
+    componentDidUpdate(prevProps, prevState, snapshot){
+        console.log(prevProps);
+        return false; 
+    }
+
+    render(){
+        return(
+
+        )
+    }
+
+}
+```
+
+
+
 
 
 
