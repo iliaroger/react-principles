@@ -330,11 +330,11 @@ containers consist of the main app.js file, the main css file and the app.test.j
 - you should not use states in every component. try to manage states in just a couple of components or classes.
 - in the past, you could use only classes for statemanagment. but with the introduction of react hooks you could also incoperate them into functions and manage state within functions. both approaches are valid. older projects (before the introduction of react hooks) couldn't be made without the class based approach
 
-### component creation lifecycle
+## component creation lifecycle
 
 - during the process of creating a component, react will call functions sequentially. this process of calling said functions can be used to extend the control of component manipulation. for example, you could fetch data from your database after the componentDidMount() was invoked. this simply gives you more control over the whole process behind the scenes. 
 
-### update lifecycle 
+## update lifecycle 
 
 ```js 
 import React, {Component} from 'react';
@@ -359,7 +359,7 @@ the update lifecycle will go through certain methods and then rerender the virtu
 
 - componentDidUpdate() is one of the most used methods
 
-### useEffect() for function components 
+## useEffect() for function components 
 
 ```js 
 import React, {useEffect} from 'react';
@@ -422,7 +422,7 @@ const Person = (props)=>{
 
 in this case above, the removed component function will be only called if the second argument of useEffect() is an empty array. otherwise (if the array would have elements inside it) the clean up function would be called every update. 
 
-### react.memo() function component 
+## react.memo() function component 
 
 react.memo() will create a snapshot of the old props and then compare them to the new props. if a change isnt detected, then the component wont be rendered.
 
@@ -446,9 +446,24 @@ const Person = (props)=>{
 export default React.memo(Person)
 ```
 
-### pure component inside classes
+## pure component inside classes
 
-pure components will check automatically before rerendering happens if the props have changed.
+pure components will check automatically before rerendering happens if the props have changed (newProps === oldProps).
+so you can omit the shouldComponentUpdate() because PureComponent will check automatically for changes.
+
+```js 
+import React, {PureComponent} from 'react';
+
+class App extends PureComponent{
+    render(){
+        return(
+            <h1>Change Content</h1>
+        )
+    }
+}
+
+export default App;
+```
 
 
 
