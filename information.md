@@ -422,6 +422,36 @@ const Person = (props)=>{
 
 in this case above, the removed component function will be only called if the second argument of useEffect() is an empty array. otherwise (if the array would have elements inside it) the clean up function would be called every update. 
 
+### react.memo() function component 
+
+react.memo() will create a snapshot of the old props and then compare them to the new props. if a change isnt detected, then the component wont be rendered.
+
+```js 
+import React, {useEffect} from 'react';
+
+const Person = (props)=>{
+
+    useEffect(()=>{
+        console.log('use effect method triggered');
+        return () =>{
+            // add functionalities after the component was removed
+        }
+    }, [])
+
+    return(
+
+    )
+}
+
+export default React.memo(Person)
+```
+
+### pure component inside classes
+
+pure components will check automatically before rerendering happens if the props have changed.
+
+
+
 
 
 
