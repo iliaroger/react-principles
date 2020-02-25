@@ -531,14 +531,14 @@ with a higher order component you are able to create a component that would wrap
 import React from 'react';
 
 const classWrapper = props => {
-    <div classes={props.classes}>{props.children}</div>
+    return <div classes={props.classes}>{props.children}</div>
 }
 
 export default classWrapper;
 
 // app.js
 import React, {Component} from 'react';
-import styles from './styles/classStyle.css'
+import styles from './styles/classStyle.css';
 import WithClass from '../hoc/classWrapper';
 
 class App extends Component{
@@ -553,8 +553,41 @@ class App extends Component{
 
 }
 
+export default App;
 ```
 
+## higher order functions wrapper
+
+in order to wrap jsx around a component and handle the logic elsewhere, you can create a different kind of hoc.
+
+```js
+// higher order function
+import React, {Component} from 'react';
+
+export default const checkingFunction = (WrappedComponent, className) =>{
+    return props =>{
+        <div className={props.className}>
+        <WrappedComponent/>
+        </div>
+    }
+}
+
+// app.js 
+import React, {Component} from 'react';
+import styles from './styles/classStyle.css';
+import checkingFunction from '../hoc/checkingFunction';
+
+class App extends Component {
+    render(){
+        return(
+            <h1>Rendering Component</h1>
+        )
+    }
+}
+
+export default checkingFunction(App, styles)
+```
+in this example you pass the app into the higher order component (checkingFunction(App)) wich will be wrapped around the div with the class name attribute. this is how higher order component wraps other content around them. a great use case would be to create a hoc which would handle any kind of error handling.
 
 
 
