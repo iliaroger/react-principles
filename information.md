@@ -632,3 +632,51 @@ class App extends Component{
 you will return an object with the correct previous state by passing an anonymous function into setState().
 
 
+## propTypes for prop type safety
+
+propTypes is a package for react which will ensure that your props inside your classes or components will always receive the right data type. 
+
+install: npm i --save prop-types
+
+
+```js
+// app.js
+import React, {Component} from 'react';
+import PropsTypes from 'prop-types';
+
+class App extends Component{
+
+    state = {
+        person = [{
+            name: 'Olafson'
+            lastName: 'Juerginson'
+        }, 
+        {
+            name: 'Thor',
+            lastName: 'Thunderson'
+        }]
+    }
+
+    this.setState((prevState, props)=>{
+        return{
+            persons: person,
+            changeCounter: prevState.updateState
+        };
+    });
+
+    render(){
+        return(
+
+        )
+    }
+
+    App.PropTypes = {
+        person: PropTypes.obj
+        name: PropTypes.string
+    }
+}
+
+export default App;
+```
+
+you only need to add PropTypes to the class or component of your choice and then define every prop with the desired prop type.
