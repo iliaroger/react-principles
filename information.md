@@ -680,3 +680,53 @@ export default App;
 ```
 
 you only need to add PropTypes to the class or component of your choice and then define every prop with the desired prop type.
+
+## create a reference for any element with the ref keyword
+
+with an reference keyword you can create a variable inside the class that will store the reference of a given element (for example an html element). 
+
+```js
+// app.js
+import React, {Component} from 'react';
+
+class App extends Component{
+
+    constructor(){
+        super(props);
+        this.h1Reference = React.createRef();
+    }
+
+    componentDidMount(){
+        this.h1Reference.current.focus();
+    }
+
+
+    render(){
+        return(
+            <h1 ref={this.h1Reference}>Text element</h1>
+        )
+    }
+}
+
+export default App;
+```
+
+in this example we created a reference variable inside the constructor and passed the real reference from the h1 element (from the render method). after that, you can use the h1 reference within the whole class.  
+
+## ref inside function components
+
+same thing as for classes but you only need to import the createRef hook.
+
+```js
+// higher order function
+import React, {Component, useRef} from 'react';
+
+export default const ComponentRender = () =>{
+
+    const h1reference = useRef(null);
+
+    return(
+        <h1 ref={}>Render Data</h1>
+    )
+}
+```
