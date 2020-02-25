@@ -589,8 +589,46 @@ export default checkingFunction(App, styles)
 ```
 in this example you pass the app into the higher order component (checkingFunction(App)) wich will be wrapped around the div with the class name attribute. this is how higher order component wraps other content around them. a great use case would be to create a hoc which would handle any kind of error handling.
 
+## passing props through higher order components
 
+```js
+// higher order function
+import React, {Component} from 'react';
 
+export default const checkingFunction = (WrappedComponent, className) =>{
+    return props =>{
+        <div className={props.className}>
+        <WrappedComponent {...props}/>
+        </div>
+    }
+}
+```
+in order to forward props to the destination, you need to use the spread operator. 
 
+## setState() and how to avoid mistakes
+
+inside the setState() you wont automatically refer with this.state to your old state. sometime your old state could be manipulated during the time when setState() was called. so in order to make sure that you refer to the old state withing setState() you need to pass an anonymous function with certain parameters.
+
+```js
+// app.js
+import React, {Component} from 'react';
+
+class App extends Component{
+
+    this.setState((prevState, props)=>{
+        return{
+            persons: person,
+            changeCounter: prevState.updateState
+        };
+    });
+
+    render(){
+        return(
+
+        )
+    }
+}
+```
+you will return an object with the correct previous state by passing an anonymous function into setState().
 
 
