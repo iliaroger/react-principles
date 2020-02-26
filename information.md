@@ -776,7 +776,6 @@ class App extends Component {
       )  
     }
 }
-
 ```
 
 - now you need to import the context to a receiving component. the component that receives dynamic data is called 'Context.Consumer'.
@@ -802,3 +801,61 @@ const Person = ()=>{
 
 export default Person;
 ```
+
+## static property for context in classes and components
+
+if you try to access the context object within a function inside a class you will not be able to do that. so in order to create a static variable that holds the reference of the context object you need to do the following:
+
+```js
+// context static class
+import React, {Component, useRef} from 'react';
+import Person from './Persons/Person'
+import ContextData from '../context/ ContextData';
+
+class App extends Component {
+
+    //context property will be created in the background
+
+    static contextType = ContextData;
+
+    state = {
+        personName: 'Olaf',
+        personLastName: 'Gundelson'
+    }
+    render(){
+      return(
+          <ContextData.Provider value={
+              personName: 'Olaf',
+              personLastName: 'Gundleson'
+          }>
+          {
+            <Person name={this.state.personName} lastName={this.state.personLastName}></Person>
+          }
+          </ContextData>
+      )  
+    }
+}
+```
+
+after declaring contextType and passing the ContextData component as a reference, react will create a property called (context) for you in the background. and now you will be able to access the context object within the whole class.
+
+```js
+// function component
+import React, {Component, useRef, useContext} from 'react';
+import ContextData from '../context/ ContextData';
+
+const Person = ()=>{
+
+    const Context = useContext(ContextData);
+
+    return(
+        <h1>{Context.personName}</h1>
+        <h1>{Context.personLastName}</h1>
+    )
+}
+
+export default Person;
+```
+
+by using the useContext hook you can create a context variable which can be accessed within the whole function.
+
