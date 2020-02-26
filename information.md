@@ -1,5 +1,4 @@
-# javascript topics 
-## spread and rest operator
+# react and javascript principles
 
 ```js
 const array1 = ["mick", "jery", "catlyn"];
@@ -21,7 +20,7 @@ call(2, 5, 6, 8);
 
 with map you can loop through the array and easily display array elements without mutating the original array.
 
-```js 
+```js
 render(){
     return(
         this.props.persons.map(elements => {
@@ -31,9 +30,9 @@ render(){
 }
 ```
 
-# react principles
+## react principles
 
-## importing 
+## importing
 
 ```js
 import {combine} from './combine'
@@ -46,13 +45,12 @@ import {* as group} from './combine'
 - npm install -g create-react-app
 - npx create-react-app appname
 
-
-# styling react components
+## styling react components
 
 ## flexibel way to style components
 
 create an if statement inside render() to check couple of statements
-to easily manipulate css while the virtual dom is being rerendered 
+to easily manipulate css while the virtual dom is being rerendered
 
 ```js
 const classNameArray = [];
@@ -73,7 +71,7 @@ render(){
 normally you cant apply pseudo selectors inside jsx.
 this is practically the limit of inline css inside jsx.
 
-```js 
+```js
 render(){
 
     const styling = {
@@ -88,10 +86,10 @@ but with a npm package your are allowed to use functionalities like pseude selec
 
 - install radium: npm install --save radium
 
-```js 
+```js
 import Radium from 'radium';
 
-// your class App 
+// your class App
 
 export default Radium(App);
 ```
@@ -100,7 +98,7 @@ Radium is an higher order function which will inject new functionalities into Ap
 
 inline css with radium:
 
-```js 
+```js
 render(){
 
     const styling = {
@@ -124,11 +122,10 @@ render(){
 in order to use media queries you need to import StyleRoot from the radium package and
 afterwards wrap your jsx inside the main class app with the StyleRoot element
 
-
-```js 
+```js
 import Radium, {StyleRoot} from 'radium';
 
-// your class App 
+// your class App
 
 render(){
 
@@ -144,7 +141,7 @@ render(){
         <StyleRoot>
             <div>
                 <h1 style = {mediaQueries}></h1>
-            </div>    
+            </div>
         </StyleRoot>
     )
 }
@@ -156,15 +153,15 @@ export default Radium(App);
 
 install: npm i --save styled-components
 
-```js 
+```js
 import styled from 'styled-components';
 
-// your class App 
+// your class App
 
 render(){
 
     // define media queries
-    const DivElement = styled.div 
+    const DivElement = styled.div
     `
         background-color: yellow;
         font-family: default;
@@ -175,13 +172,12 @@ render(){
             width: 60%;
         }
     `
-        
     return(
 
         <DivElement>
             <div>
                 <h1 style = {DivElements}></h1>
-            </div>    
+            </div>
         </DivElement>
     )
 }
@@ -193,15 +189,15 @@ note: styled component converts the written inline css to a class and not just l
 
 you can also insert props into your own css style and check for certain conditions:
 
-```js 
+```js
 import styled from 'styled-components';
 
-// your class App 
+// your class App
 
 render(){
 
     // define media queries
-    const DivElement = styled.div 
+    const DivElement = styled.div
     `
         background-color: ${props => props.nameCheck === 'Rickart' ? 'green' : 'yellow' };
         font-family: default;
@@ -212,13 +208,12 @@ render(){
             width: 60%;
         }
     `
-        
     return(
 
         <DivElement nameCheck = {this.persons[0].name}>
             <div>
                 <h1></h1>
-            </div>    
+            </div>
         </DivElement>
     )
 }
@@ -228,24 +223,24 @@ export default App;
 
 ## css module styling
 
-in order to use css seperately from multiple files and still apply classes to components without 
+in order to use css seperately from multiple files and still apply classes to components without
 the stress and hustle to create unique class names, you can use css modules to make it happen
 
-- css files must contain the keyword `module`. for example: main.module.css 
+- css files must contain the keyword `module`. for example: main.module.css
 
-```js 
+```js
 import classes from './main.module.css';
 
-// your class App 
+// your class App
 
 render(){
- 
+
     return(
 
         <DivElement>
             <div>
                 <h1 style = {classes.h1}></h1>
-            </div>    
+            </div>
         </DivElement>
     )
 }
@@ -253,10 +248,10 @@ render(){
 export default App;
 ```
 
-note: if you are using an older version of react, you need manually to setup the class module settings inside 
+note: if you are using an older version of react, you need manually to setup the class module settings inside
 the `webpack.config` files.
 
-# debugging react apps
+## debugging react apps
 
 - chrome debugger tools can help find tricky logical errors inside your app (chrome dev tools -> sources tab -> create breakpoints)
 - another great tool is: react developer tools from chrome (extension). install it and use it in the arrow drop down menu
@@ -264,11 +259,11 @@ whilst debugging your application
 
 ## error boundries
 
-to prevent a full crash of your application or just prevent unexpected error messages from appearing, you can create error boundries (which are technically just components) and use them to catch errors 
+to prevent a full crash of your application or just prevent unexpected error messages from appearing, you can create error boundries (which are technically just components) and use them to catch errors
 
-1. create a component 
+1. create a component
 
-``` js 
+``` js
 import React, {Component} from 'react';
 
 class ErrorBoundry extends Component {
@@ -295,34 +290,35 @@ class ErrorBoundry extends Component {
 
 }
 export default ErrorBoundry;
-``` 
+```
 
-2. import the component and wrap it around where an error might occur 
+2.import the component and wrap it around where an error might occur
 
-```js 
+```js
 import classes from './main.module.css';
 import ErrorBoundry from './ErrorBoundry'
 
-// your class App 
+// your class App
 
 render(){
- 
+
     return(
 
         <ErrorBoundry>
             <div>
                 <h1 style = {classes.h1}></h1>
                 <button>Get Data</button>
-            </div>    
+            </div>
         </ErrorBoundry>
     )
 }
 
 export default App;
 ```
-wrap the `ErrorBoundry` element around the area where an error might occur. in this case, clicking the button and await data might cause an unexpected error which will be caught by the error boundry component. 
 
-# components and react internals in detail 
+wrap the `ErrorBoundry` element around the area where an error might occur. in this case, clicking the button and await data might cause an unexpected error which will be caught by the error boundry component.
+
+## components and react internals in detail
 
 note: always use a good project structure. for example: assets(folder), components(folder), containers(folder).
 containers consist of the main app.js file, the main css file and the app.test.js file.
@@ -332,18 +328,18 @@ containers consist of the main app.js file, the main css file and the app.test.j
 
 ## component creation lifecycle
 
-- during the process of creating a component, react will call functions sequentially. this process of calling said functions can be used to extend the control of component manipulation. for example, you could fetch data from your database after the componentDidMount() was invoked. this simply gives you more control over the whole process behind the scenes. 
+- during the process of creating a component, react will call functions sequentially. this process of calling said functions can be used to extend the control of component manipulation. for example, you could fetch data from your database after the componentDidMount() was invoked. this simply gives you more control over the whole process behind the scenes.
 
-## update lifecycle 
+## update lifecycle
 
-```js 
+```js
 import React, {Component} from 'react';
 
 class Person extends Component {
 
     componentDidUpdate(prevProps, prevState, snapshot){
         console.log(prevProps);
-        return false; 
+        return false;
     }
 
     render(){
@@ -359,9 +355,9 @@ the update lifecycle will go through certain methods and then rerender the virtu
 
 - componentDidUpdate() is one of the most used methods
 
-## useEffect() for function components 
+## useEffect() for function components
 
-```js 
+```js
 import React, {useEffect} from 'react';
 
 const Person = (props)=>{
@@ -376,23 +372,23 @@ const Person = (props)=>{
 }
 ```
 
-- inside a function component the useEffect() is the second most important function after setState(). it is basically triggered every time after a render cycle and is the equivalent compared to componentDidMount() and componentDidUpdate() methods inside the class component that are triggered sequentially. 
+- inside a function component the useEffect() is the second most important function after setState(). it is basically triggered every time after a render cycle and is the equivalent compared to componentDidMount() and componentDidUpdate() methods inside the class component that are triggered sequentially.
 - to control when exactly the useEffect() is being triggered, you need to pass a second argument into the function. more specifically, you need to pass an array with the information, that will be changed. if the element inside the array is changed then a rerender will occure. if the data stays the same it will not invoke the method.
 - if you want to invoke the useEffect() only once in the beginning of the cycle you need to pass an empty array as the second argument
-- you can call useEffect() multiple times inside an a function component 
+- you can call useEffect() multiple times inside an a function component
 
-```js 
+```js
 import React, {useEffect} from 'react';
 
 const Person = (props)=>{
 
     useEffect(()=>{
         console.log('use effect method triggered');
-    }, []) // will be invoked once in the beginning 
+    }, []) // will be invoked once in the beginning
 
     useEffect(()=>{
         console.log('use effect method triggered');
-    }, [props.name]) // will only be invoked if the props.name will be changed 
+    }, [props.name]) // will only be invoked if the props.name will be changed
 
     return(
 
@@ -402,7 +398,7 @@ const Person = (props)=>{
 
 in order to add functionalities after a component was removed from the dom you can simply insert a return statement inside the useEffect().
 
-```js 
+```js
 import React, {useEffect} from 'react';
 
 const Person = (props)=>{
@@ -420,13 +416,13 @@ const Person = (props)=>{
 }
 ```
 
-in this case above, the removed component function will be only called if the second argument of useEffect() is an empty array. otherwise (if the array would have elements inside it) the clean up function would be called every update. 
+in this case above, the removed component function will be only called if the second argument of useEffect() is an empty array. otherwise (if the array would have elements inside it) the clean up function would be called every update.
 
-## react.memo() function component 
+## react.memo() function component
 
 react.memo() will create a snapshot of the old props and then compare them to the new props. if a change isnt detected, then the component wont be rendered.
 
-```js 
+```js
 import React, {useEffect} from 'react';
 
 const Person = (props)=>{
@@ -451,7 +447,7 @@ export default React.memo(Person)
 pure components will check automatically before rerendering happens if the props have changed (newProps === oldProps).
 so you can omit the shouldComponentUpdate() because PureComponent will check automatically for changes.
 
-```js 
+```js
 import React, {PureComponent} from 'react';
 
 class App extends PureComponent{
@@ -469,7 +465,7 @@ export default App;
 
 create a folder called 'hoc' (higher order component) and create a file called `auxiliary.js`. aux.js is not a valid name because its reserved for windows (aux is a reserved name). the aux components are basically replacing divs. you can return multiple aux elements and seperate your code without receiving any type of error message.
 
-```js 
+```js
 // auxiliary.js file
 const Aux = => props.children;
 
@@ -497,11 +493,11 @@ class App extends Component{
 }
 ```
 
-## react.fragment 
+## react.fragment
 
-react fragment is basically the same like aux but it is built inside react. 
+react fragment is basically the same like aux but it is built inside react.
 
-```js 
+```js
 import React, {Component} from 'react';
 import Aux from '../hoc/auxiliary';
 
@@ -522,11 +518,11 @@ class App extends Component{
 }
 ```
 
-## higher order component class wrapper 
+## higher order component class wrapper
 
 with a higher order component you are able to create a component that would wrap around jsx with some functionalities. a good use case would be to create a wrap component that would catch errors that happen from within the wrapper. in this case the hoc will wrap jsx and also apply some custom css to it.  
 
-```js 
+```js
 // classWrapper.js
 import React from 'react';
 
@@ -572,7 +568,7 @@ export default const checkingFunction = (WrappedComponent, className) =>{
     }
 }
 
-// app.js 
+// app.js
 import React, {Component} from 'react';
 import styles from './styles/classStyle.css';
 import checkingFunction from '../hoc/checkingFunction';
@@ -587,6 +583,7 @@ class App extends Component {
 
 export default checkingFunction(App, styles)
 ```
+
 in this example you pass the app into the higher order component (checkingFunction(App)) wich will be wrapped around the div with the class name attribute. this is how higher order component wraps other content around them. a great use case would be to create a hoc which would handle any kind of error handling.
 
 ## passing props through higher order components
@@ -603,7 +600,8 @@ export default const checkingFunction = (WrappedComponent, className) =>{
     }
 }
 ```
-in order to forward props to the destination, you need to use the spread operator. 
+
+in order to forward props to the destination, you need to use the spread operator.
 
 ## setState() and how to avoid mistakes
 
@@ -629,15 +627,14 @@ class App extends Component{
     }
 }
 ```
-you will return an object with the correct previous state by passing an anonymous function into setState().
 
+you will return an object with the correct previous state by passing an anonymous function into setState().
 
 ## propTypes for prop type safety
 
-propTypes is a package for react which will ensure that your props inside your classes or components will always receive the right data type. 
+propTypes is a package for react which will ensure that your props inside your classes or components will always receive the right data type.
 
 install: npm i --save prop-types
-
 
 ```js
 // app.js
@@ -650,7 +647,7 @@ class App extends Component{
         person = [{
             name: 'Olafson'
             lastName: 'Juerginson'
-        }, 
+        },
         {
             name: 'Thor',
             lastName: 'Thunderson'
@@ -683,7 +680,7 @@ you only need to add PropTypes to the class or component of your choice and then
 
 ## create a reference for any element with the ref keyword
 
-with an reference keyword you can create a variable inside the class that will store the reference of a given element (for example an html element). 
+with an reference keyword you can create a variable inside the class that will store the reference of a given element (for example an html element).
 
 ```js
 // app.js
@@ -727,7 +724,7 @@ export default const ComponentRender = () =>{
 
     useEffect(()=>{
         h1.reference.current.click();
-    },[]); 
+    },[]);
 
     return(
         <h1 ref={h1reference}>Render Data</h1>
@@ -737,8 +734,5 @@ export default const ComponentRender = () =>{
 
 useEffect will be called after the return statement. so if you would assign the reference after the reference creation you would receive an null pointer exception because the h1 reference wasn't assigned to the reference variable yet.
 
-## context, passing data from component to component without 
-
-
-
+## context, passing data from component to component without
 
