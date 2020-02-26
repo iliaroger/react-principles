@@ -725,8 +725,20 @@ export default const ComponentRender = () =>{
 
     const h1reference = useRef(null);
 
+    useEffect(()=>{
+        h1.reference.current.click();
+    },[]); 
+
     return(
-        <h1 ref={}>Render Data</h1>
+        <h1 ref={h1reference}>Render Data</h1>
     )
 }
 ```
+
+useEffect will be called after the return statement. so if you would assign the reference after the reference creation you would receive an null pointer exception because the h1 reference wasn't assigned to the reference variable yet.
+
+## context, passing data from component to component without 
+
+
+
+
