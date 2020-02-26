@@ -736,3 +736,69 @@ useEffect will be called after the return statement. so if you would assign the 
 
 ## context, passing data from component to component without
 
+in order to have an global object or any kind of data available you need to create an context object and import it into any file you like to use it in.
+
+- create an context component
+
+```js
+// context component
+import React, {Component, useRef} from 'react';
+
+const ContextData = React.createContext();
+
+export default ContextData;
+
+```
+
+- then you need to import the context component and wrap it around the component that you like to pass the data to. the file where you pass dynamic data to somewhere is called 'Context.Provider'. You provide data to other components. its the origin of dynamic data.
+
+```js
+// provider class
+import React, {Component, useRef} from 'react';
+import Person from './Persons/Person'
+import ContextData from '../context/ ContextData';
+
+class App extends Component {
+    state = {
+        personName: 'Olaf',
+        personLastName: 'Gundelson'
+    }
+    render(){
+      return(
+          <ContextData.Provider value={
+              personName: 'Olaf',
+              personLastName: 'Gundleson'
+          }>
+          {
+            <Person name={this.state.personName} lastName={this.state.personLastName}></Person>
+          }
+          </ContextData>
+      )  
+    }
+}
+
+```
+
+- now you need to import the context to a receiving component. the component that receives dynamic data is called 'Context.Consumer'.
+wrap jsx with the context element function that receives the data via the context argument. use the context argument to access the data.
+
+```js
+// consumer component
+import React, {Component, useRef} from 'react';
+import ContextData from '../context/ ContextData';
+
+const Person = ()=>{
+    return(
+        <ContextData>
+        {
+            context =>{
+                <h1>{context.personName}</h1>
+                <h1>{context.personLastName}</h1>
+            }
+        }
+        </ContextData>
+    )
+}
+
+export default Person;
+```
