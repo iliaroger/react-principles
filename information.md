@@ -859,3 +859,83 @@ export default Person;
 
 by using the useContext hook you can create a context variable which can be accessed within the whole function.
 
+## reaching out to the web (http/ajax)
+
+promise based http client for node and browser: axios.
+
+install: npm i axios --save
+
+- get data with axios & post data with axios:
+
+```js
+// class axios
+import React from 'react';
+import ContextData from '../context/ ContextData';
+import axios from 'axios';
+
+class App extends Component{
+
+    state = {
+        person: []
+    }
+
+    axios.get('https://placeholderjson.com/data')
+    .then((response)=>{
+        this.setState({
+            person: response.data
+        })
+        console.log(response);
+    })
+
+    postData(){
+        data = {
+            name: this.state.person.name;
+            lastName: this.state.person.lastName;
+        }
+
+        axios.post('https://placeholderjson.com/data',)
+    }
+
+    render(){
+        return(
+            <Person name={this.state.person.name} handler={this.postData}></Person>
+        )
+    }
+
+}
+
+export default App;
+```
+
+## interceptors in axios
+
+do fully control requests and responses you can use interceptors. they are used to give you more control on authorization within the whole app and are easy to setup:
+
+- go to the index.js file (the file where `<App>` is being rendered)
+
+```js
+// index.js
+import React, {Component, useRef, useContext} from 'react';
+import ContextData from '../context/ ContextData';
+import axios from 'axios';
+
+axios.interceptors.request.use(request => {
+    console.log(request);
+    // check the request object for authorization etc.
+    return request;
+}, error =>{
+    return Promise.reject(error);
+})
+
+axios.interceptors.response.use(response => {
+    console.log(response);
+    // check the request object for authorization etc.
+    return response;
+}, error =>{
+    return Promise.reject(error);
+})
+```
+
+- you need to return request/response otherwise no get/post method can be send within the whole app.
+- you need to return the error in a promise otherwise no componente with an error handling function will receive an error object.
+
