@@ -939,3 +939,98 @@ axios.interceptors.response.use(response => {
 - you need to return request/response otherwise no get/post method can be send within the whole app.
 - you need to return the error in a promise otherwise no componente with an error handling function will receive an error object.
 
+## axios global header settings
+
+in axios you can create header settings which will be stored and send in every get/post method. a great usecase would be to store a header setting after the user has loged in and this is authorized to traverse inside the app. 
+
+```js
+// index.js
+import React, {Component, useRef, useContext} from 'react';
+import ContextData from '../context/ ContextData';
+import axios from 'axios';
+
+axios.defaults.headers.common['Authorization'] = 'Auth Token';
+
+```
+
+## routing
+
+install: npm i --save react-router react-router-dom;
+
+- import `BrowserRouter` from the react-router-dom into app.js and wrap App around it.
+
+```js
+// index.js
+import React, {Component, useRef, useContext} from 'react';
+import {BrowserRouter} from 'react-router-dom';
+
+class App extends Component{
+    render(){
+        return(
+            <BrowserRouter>
+                <div className="App">
+                <Content>
+                </div>
+            <BrowserRouter>
+        )
+    }
+}
+```
+
+- import `Route` from the react-router-dom package.  
+
+```js
+// index.js
+import React, {Component, useRef, useContext} from 'react';
+import {Route} from 'react-router-dom';
+import PersonComponent from './Component/Person';
+
+class App extends Component{
+    render(){
+        return(
+            <Route path="/" exact render={()=>{<h1> Main Menu </h1>}} />
+
+            <Route path="/" exact component={PersonComponent}>
+        )
+    }
+}
+```
+
+- the component approach is more preferable than the render method. still you can use the render method to display small bits of information to the dom.
+- path is self explanatory.
+- the exact keyword is a boolean and by definition true when unassigned. the normal start path of every url is "/". by using exact, react router will only redirect the route to paths that end with "/". if exact would be set to false, then paths like "/menu/profile" would be valid because they start with a "/".
+- render() will display jsx.
+
+## link
+
+to prevent the app from rerendering by using anchor tags you can use the link elements from react instead. 
+
+```js
+// index.js
+import React, {Link} from 'react';
+import {Route} from 'react-router-dom';
+import PersonComponent from './Component/Person';
+
+class App extends Component{
+
+    <ul>
+        <li><Link to='/'>Home</Link></li>
+        <li><Link to={{
+            pathname: 'profile',
+            hash: '#edit', // will jump after redirect to #edit
+            search: '?quick-submit'
+        }}>Home</Link></li>
+    </ul>
+
+
+    render(){
+        return(
+            <h1>Home Page</h1>
+        )
+    }
+}
+```
+
+- with link react will prevent the redirection from reloading the page. react will handle everything internally.
+- the simplest way to switch a page is to just use the to='/path' method. if you want to pass more information into the link you can use the object method instead. 
+
