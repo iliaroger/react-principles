@@ -1187,7 +1187,7 @@ class App extends Component{
         let redirect = null;
 
         if(this.state.formSubmited == true){
-            redirect = <Redirect to="/posts"/>
+            redirect = <Redirect to="/posts"/>;
         }
 
         return(
@@ -1233,4 +1233,17 @@ class App extends Component{
 - the personComponent should be imported dynamically with the react.lazy function.
 - the component that you want to display should be wrapped with the suspence component from react.
 - fallback attribute is active while the content is loading.
+
+## basename for routing
+
+- if you want to serve the app from for example: `domain.com/my-app`, you need to tweak it inside react. react routes normally start at "/" so: domain.com/.
+
+```js
+<BrowserRouter basename="/my-app">
+    <App/>
+</BrowserRouter>
+```
+
+## redux
+
 
