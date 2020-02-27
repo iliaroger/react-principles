@@ -941,7 +941,7 @@ axios.interceptors.response.use(response => {
 
 ## axios global header settings
 
-in axios you can create header settings which will be stored and send in every get/post method. a great usecase would be to store a header setting after the user has loged in and this is authorized to traverse inside the app. 
+in axios you can create header settings which will be stored and send in every get/post method. a great usecase would be to store a header setting after the user has loged in and this is authorized to traverse inside the app.
 
 ```js
 // index.js
@@ -953,7 +953,7 @@ axios.defaults.headers.common['Authorization'] = 'Auth Token';
 
 ```
 
-## routing
+## routing and the browser router object
 
 install: npm i --save react-router react-router-dom;
 
@@ -996,6 +996,7 @@ class App extends Component{
 }
 ```
 
+- every path or component that is wrapped around the `BrowserRouter` component has access to the prop object that has extended functionalities
 - the component approach is more preferable than the render method. still you can use the render method to display small bits of information to the dom.
 - path is self explanatory.
 - the exact keyword is a boolean and by definition true when unassigned. the normal start path of every url is "/". by using exact, react router will only redirect the route to paths that end with "/". if exact would be set to false, then paths like "/menu/profile" would be valid because they start with a "/".
@@ -1003,7 +1004,7 @@ class App extends Component{
 
 ## link
 
-to prevent the app from rerendering by using anchor tags you can use the link elements from react instead. 
+to prevent the app from rerendering by using anchor tags you can use the link elements from react instead.
 
 ```js
 // index.js
@@ -1033,4 +1034,172 @@ class App extends Component{
 
 - with link react will prevent the redirection from reloading the page. react will handle everything internally.
 - the simplest way to switch a page is to just use the to='/path' method. if you want to pass more information into the link you can use the object method instead.
+
+## withRouter accessing props from multiple components
+
+```js
+// index.js
+import React, {Link} from 'react';
+import {Route, withRouter} from 'react-router-dom';
+import PersonComponent from './Component/Person';
+
+class App extends Component{
+
+    console.log(props);
+
+    render(){
+        return(
+            <h1>Home Page</h1>
+        )
+    }
+}
+
+export default withRouter(App);
+```
+
+- wrapp a higher order function around the component/class to access props with more properties such as 'history, match'.
+
+## absolute and relative path
+
+- an absolut path is simply a path that gets appended to your domain url. for example: domain.com/profile. even if you are already on domain.com/edit, the path will be appended to the domain without taking the old path into consideration.
+- a relative path on the other hand is a path that takes the old path into account and appends it onto the url chain. for example: domain.com/profile/edit.
+- to create an relative path you need to do the following:
+
+```js
+// index.js
+class App extends Component{
+
+    <ul>
+        <li><Link to='/'>Home</Link></li>
+        <li><Link to={{
+            pathname: this.props.match.url + '/profile',
+            hash: '#edit', // will jump after redirect to #edit
+            search: '?quick-submit'
+        }}>Home</Link></li>
+    </ul>
+
+
+    render(){
+        return(
+            <h1>Home Page</h1>
+        )
+    }
+}
+
+export default withRouter(App);
+```
+
+## navlink styling
+
+- in order to style navlinks you need to swap the link element with the navlink element.
+
+```js
+// index.js
+import React, {NavLink} from 'react';
+import {Route} from 'react-router-dom';
+import PersonComponent from './Component/Person';
+
+class App extends Component{
+
+    <ul>
+        <li><NavLink to='/' exact activeClassName="activeLinkName">Home</NavLink></li>
+        <li><NavLink to={{
+            pathname: 'profile'
+        }}>Home</NavLink></li>
+    </ul>
+
+
+    render(){
+        return(
+            <h1>Home Page</h1>
+        )
+    }
+}
+```
+
+- normally you would find in the google chrome inspector an active class that is automatically appended to the navlink called 'active'.
+- in order to create an own class for the link elements you need to create the attribute called 'activeClassName' and give it an own class name.
+
+## switch route and /:id
+
+in order to prevent react from analyzing and traversing through every available route, you can simply add the switch element and wrap it around the routes
+
+```js
+// index.js
+import React, {NavLink, Switch} from 'react';
+import {Route} from 'react-router-dom';
+import PersonComponent from './Component/Person';
+
+class App extends Component{
+
+    <Switch>
+        <Route path="/" exact component={PersonComponent}/>
+        <Route path="/:id" exact component={PersonComponent}/>
+    </Switch>
+}
+
+```
+
+- by adding a colon to the path you can pass any data forward and retrieve them with props.
+- important the route order (top to bottom) is the same as in node.js.
+
+## redirect component
+
+in order to redirect users from one route to another you need to import the `Redirect` component from react.
+
+```js
+import React from 'react';
+import {Redirect} from 'react-roter-dom';
+
+class App extends Component{
+    render(){
+        return(
+            <Redirect from="/" to="/posts"/>
+        )
+    }
+}
+
+export default App;
+```
+
+## conditional redirects
+
+```js
+
+import React from 'react';
+import {Component} from 'react-router-dom';
+
+class App extends Component{
+
+    state = {
+        formSubmited: false
+    }
+
+    app.get(response =>{
+        this.setState({
+            formSubmited: true
+        })
+    })
+
+
+    render(){
+
+        let redirect = null;
+
+        if(this.state.formSubmited == true){
+            redirect = <Redirect to="/posts"/>
+        }
+
+        return(
+            {redirect}
+            <Route exact component={Person} />
+        )
+    }
+}
+
+```
+
+## handling 404 routes
+
+- you simply have to not define a path inside a route. the last route component without a path will catch all undefined paths.
 
