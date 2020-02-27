@@ -1203,3 +1203,34 @@ class App extends Component{
 
 - you simply have to not define a path inside a route. the last route component without a path will catch all undefined paths.
 
+## react lazy loading
+
+in most cases you dont want to load every component immediately from the start. most components should be loaded when a user for example clicks on a link. in order to asynchronously load the content you need to implement react lazy loading.
+
+```js
+import React, {Route, Suspense} from 'react';
+
+const PersonComponent = React.lazy(()=>{
+    import('./Person/Person');
+})
+
+class App extends Component{
+    render(){
+        return(
+            <React.Fragment>
+                <Route path="/" render={()=>{
+                    <Suspense fallback={<div>loading...(insert gif)</div>}>
+                        <PersonComponent>
+                    </Suspense>
+                }}/>
+            </React.Fragment>
+        )
+    }
+}
+
+```
+
+- the personComponent should be imported dynamically with the react.lazy function.
+- the component that you want to display should be wrapped with the suspence component from react.
+- fallback attribute is active while the content is loading.
+
