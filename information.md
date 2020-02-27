@@ -1032,5 +1032,5 @@ class App extends Component{
 ```
 
 - with link react will prevent the redirection from reloading the page. react will handle everything internally.
-- the simplest way to switch a page is to just use the to='/path' method. if you want to pass more information into the link you can use the object method instead. 
+- the simplest way to switch a page is to just use the to='/path' method. if you want to pass more information into the link you can use the object method instead.
 
