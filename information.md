@@ -50,6 +50,26 @@ const mapStateToProps = state =>{
 export default connect(mapStateToProps)(Validation)
 ```
 
+## preserving the imutability of an object
+
+- often times, you dont want to manipulate the state inside react but more creating a copy and switching the copy with the original one. the spread operator is a good method to do so but there is also the object method.
+
+- using concat() will allow yoo not to mutate the original array but more concatinate two arrays together into a new one.
+
+```js
+
+state = {
+    name: 'Olafson'
+    id: []
+}
+
+const newState = Object.assign({}, state);
+
+const newArray = state.id.concat({id: 'd23n892'})
+
+export default connect(mapStateToProps)(Validation)
+```
+
 ## react principles
 
 ## importing
@@ -1377,4 +1397,60 @@ export default connect(mapStateToProps)(App)
 - by having defined a state inside a reducer.js file, the connect() function will pass the reference from the store to the mapStateToProps function. this will allow you to use the ctr variable inside the class or component.
 - mapStateToProps is bound to the class/component where it was defined. so ctr is only available inside the App class.
 - normally you cut out the data from the store that you only need inside your class/component.
+
+## sending a dispatch in components
+
+```js
+
+import {connect} from 'react-redux';
+
+class App extends Component{
+    render(){
+        return(
+            <Person name={this.props.ctr} clicked={()=> this.props.onSendUpdate}/>
+        )
+    }
+}
+
+const mapStateToProps = state =>{
+    return {
+        ctr: state.name
+    }
+}
+
+const mapDispatchToProps = dispatch =>{
+    return{
+        onSendUpdate: ()=> dispatch({type: 'Update'});
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
+```
+
+- you pass the mapDispatchToProps() function into the connect() function. by doing that you will receive the dispatch function as an argument inside the mapDispatchToProps() function.
+- onSendUpdate will be available inside the props and hence you can use it in the Person component to then trigger the function after a click event.
+- the reducer file should take care of the functionalities of the onSendUpdate() function. to be specific, it should filter for the 'Update' type and then create the logic behind it.
+
+## adding payload to dispatch function
+
+-
+
+```js
+const mapDispatchToProps = dispatch =>{
+    return{
+        onSendUpdate: ()=> dispatch({type: 'Update', value: 'key'});
+    }
+}
+
+//reducer.js
+
+const rootReducer = (state = initialState, action)=>{
+    if(action.type === 'name'){
+        ...state,
+        return state.person + action.value;
+    }
+
+    return state;
+}
+```
 
