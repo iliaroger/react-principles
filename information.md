@@ -30,6 +30,26 @@ render(){
 }
 ```
 
+## wrapping a higher order function and passing a function to it
+
+- the connect() function receives the mapStateToProps() function which then becomes a standalone function. imagine connect(mapStateToProps) being replaced by a function called stateProps which then will take Validation as an argument. stateProps(Validation).
+
+```js
+import {connect} from 'react-redux';
+
+class Validation extends Component{
+
+}
+
+const mapStateToProps = state =>{
+    return {
+        name: state.name
+    }
+}
+
+export default connect(mapStateToProps)(Validation)
+```
+
 ## react principles
 
 ## importing
@@ -1331,7 +1351,7 @@ ReactDom.render(
 )
 ```
 
-- in the component/class you need to setup 'connect' for the subscription 
+- in the component/class you need to setup 'connect' for the subscription
 
 ```js
 
@@ -1357,4 +1377,4 @@ export default connect(mapStateToProps)(App)
 - by having defined a state inside a reducer.js file, the connect() function will pass the reference from the store to the mapStateToProps function. this will allow you to use the ctr variable inside the class or component.
 - mapStateToProps is bound to the class/component where it was defined. so ctr is only available inside the App class.
 - normally you cut out the data from the store that you only need inside your class/component.
-- 
+
