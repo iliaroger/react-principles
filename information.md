@@ -1314,3 +1314,47 @@ const store = createStore(reducer);
 
 ## setting up redux with components
 
+- settup the index.js file
+- install: npm i --save react-redux
+- you pass the store to the Provider so that all components can use it within the app.
+
+```js
+import {createStore} from 'redux';
+import {Provider} from 'react-redux';
+
+const store = createStore(reducer);
+
+ReactDom.render(
+    <Provider store={store}>
+        <App/>
+    </Provider>
+)
+```
+
+- in the component/class you need to setup 'connect' for the subscription 
+
+```js
+
+import {connect} from 'react-redux';
+
+class App extends Component{
+    render(){
+        return(
+            <Person name={this.props.ctr}/>
+        )
+    }
+}
+
+const mapStateToProps = state =>{
+    return {
+        ctr: state.name
+    }
+}
+
+export default connect(mapStateToProps)(App)
+```
+
+- by having defined a state inside a reducer.js file, the connect() function will pass the reference from the store to the mapStateToProps function. this will allow you to use the ctr variable inside the class or component.
+- mapStateToProps is bound to the class/component where it was defined. so ctr is only available inside the App class.
+- normally you cut out the data from the store that you only need inside your class/component.
+- 
