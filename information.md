@@ -1483,7 +1483,12 @@ deploy:
 - simply install the firebase/aws packages and select the 'build' folder from your app that firebase/aws gonna upload to the server.
 - uploading your app is managed inside your ide.
 
-## webpack
+## babel for webpack
+
+install: npm i --save-dev @babel/core @babel/preset-env @babel/preset-react @babel/preset-stage-2 babel-loader
+@babel/plugin-proposal-class-properties
+
+## webpack & babel & css
 
 basic workflow requirements:
 
@@ -1499,6 +1504,7 @@ webpack needs an configuration file to understand from where it should enter the
 
 ```js
 const path = require('path');
+const autoprefixer = require('autoprefixer');
 
 module.exports = {
     mode: 'development',
@@ -1508,15 +1514,75 @@ module.exports = {
         filename: 'bundle.js',
         publicPath: ''
     },
-    devtool: 'cheap-module-eval-source-map'
+    devtool: 'cheap-module-eval-source-map',
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                loader: 'babel-loader', // npm i babel-loader
+                exclude: /node-modules/
+            },
+            {
+                test: /\.css$/,
+                exclude: /node-modules/,
+                use: [
+                    {loader: 'style-loader'}, // npm i style-loader
+                    {
+                        loader: 'css-loader', // npm i css-loader
+                        options: {
+                            importLoader: 1,
+                            modules: {
+                                localIdentName: '[name]__[local]__[hash:base64:5]'
+                            }
+                        }
+                    },
+                    {
+                        loader: 'postcss-loader', // npm i postcss-loader
+                        options: {
+                            ident: 'postcss',
+                            plugins: ()=>{[autoprefixer()]} // npm i autoprefixer
+                        }
+                    }
+                ]
+            },
+            {
+                test: /\.(png|jpe?g|gif)$/, // either png jpe or jpeg or gif
+                loader: 'url-loader?limit=8000&name=images/[name].[ext]' // limit=8000kb/8mb file size limit, [ext] is the original extension
+            }
+        ]
+    },
+    {
+        plugins: [
+            new HtmlWebpackPlugin({ // npm i HtmlWebpackPlugin
+                template: __dirname + '/src/index.html',
+                filename: 'index.html',
+                inject: 'body'
+            })
+        ]
+    }
 };
 ```
 
+inside the `package.json` you need to insert the following so that the autoprefixer can work:
+
+```js
+"license": "ISC",
+"browserlist": "> 1%, last 2 versions"
+```
+
 - const path will import the absolute path property which can be used to point to the folder location.
+- module.rules is a babel configuration. you basically telling babel to look up for any file with the .js extension.
+- modules.rules.loader is the package that will use the configuration settings.
+- module.rules.exclude will exclude the node-module folder. so no code inside it will be transpiled.
+- browserlist refers to a specific target browser selection, that needs to be defined for babel and css.
 
-## babel for webpack
+additional install: npm i file-loader
 
-install: npm i --save-dev @babel/core @babel/preset-env @babel/preset-react @babel/preset-stage-2 babel-loader
-@babel/plugin-proposal-class-properties
+deploy for production:
+
+- create a copy of `webpack.config.js` and rename it to `webpack.config.prod.js`
+- change `mode` to `production` and `devtool` to `none`
+- in the package.json file create a new entry inside scripts called: `"build:prod": "webpack --config webpack.config.prod.js"`
+- if you run npm build:prod, webpack will create a `dist` folder ready to use for production.
 
 
