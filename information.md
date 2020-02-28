@@ -1454,3 +1454,7 @@ const rootReducer = (state = initialState, action)=>{
 }
 ```
 
+## multiple reducer
+
+- splitting reducers into seperate files wont create in the end seperate reducers. all reducer files will be merged together into one.
+
