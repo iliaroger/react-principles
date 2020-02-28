@@ -1494,3 +1494,29 @@ basic workflow requirements:
 - optimize code
 
 install: npm i --save-dev webpack webpack-dev-server
+
+webpack needs an configuration file to understand from where it should enter the app and what files to bundle.
+
+```js
+const path = require('path');
+
+module.exports = {
+    mode: 'development',
+    entry: './src/index.js',
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'bundle.js',
+        publicPath: ''
+    },
+    devtool: 'cheap-module-eval-source-map'
+};
+```
+
+- const path will import the absolute path property which can be used to point to the folder location.
+
+## babel for webpack
+
+install: npm i --save-dev @babel/core @babel/preset-env @babel/preset-react @babel/preset-stage-2 babel-loader
+@babel/plugin-proposal-class-properties
+
+
