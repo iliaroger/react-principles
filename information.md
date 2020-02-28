@@ -1458,3 +1458,39 @@ const rootReducer = (state = initialState, action)=>{
 
 - splitting reducers into seperate files wont create in the end seperate reducers. all reducer files will be merged together into one.
 
+## testing
+
+- jest
+- enzyme (airbnb testing tools)
+- testing is used primarly for component testing (if components render the right data) and reducer logic.
+
+install: npm i --save enzyme react-test-renderer enzype-adapter-react-16
+
+- just practice unit tests
+
+## deploying an app
+
+deployment steps:
+
+- check for the pathname (`BrowserRouter, pasename="domain.com/my-app"`)
+- build and optimize (`npm run build in create-react-app project`)
+- always serve index.html (even in 404 cases)
+- upload build artifcats to static server
+
+deploy:
+
+- you can deploy your app to firebase or aws.
+- simply install the firebase/aws packages and select the 'build' folder from your app that firebase/aws gonna upload to the server.
+- uploading your app is managed inside your ide.
+
+## webpack
+
+basic workflow requirements:
+
+- compile next-gen javascript features
+- hadle jsx
+- css autoprefixing
+- support image imports
+- optimize code
+
+install: npm i --save-dev webpack webpack-dev-server
