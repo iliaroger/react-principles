@@ -1246,4 +1246,71 @@ class App extends Component{
 
 ## redux
 
+install: npm i --save redux
+
+- redux is basically a tool for managing a single global state inside your app.
+- components dispatch actions and redux will notify subscribers for any state changes.
+- reducer is basically the handler for updating the state.
+
+## setting up a redux store
+
+```js
+
+const redux = require('redux');
+
+const createStore = redux.createStore;
+
+const initialState = {
+    person: 'Olaf'
+}
+
+// reducer
+
+const rootReducer = (state = initialState, action)=>{
+    if(action.type === 'name'){
+        ...state,
+        return state.person;
+    }
+
+    return state;
+}
+
+// store
+
+const store = createStore(rootReducer);
+
+// subscription
+
+store.subscribe(()=>{
+    console.log('Changed state', store.getState());
+})
+
+// dispatch
+
+store.dispatch({type: 'name'});
+store.dispatch({type: 'lastName'})
+
+console.log(store.getState());
+```
+
+- the store will be managed by the rootReducer so you have to pass the function into createStore.
+- dispatch requires a unique type for identification in the rootReducer.
+- never mutate the original state. always use the spread operator to create a copy of it and then change the values.
+
+## importing redux to your app
+
+in order to use redux you need to do the following:
+
+- create a folder for the store and inside it create the reducer function.
+- import the setup for redux in the index.js file.
+
+```js
+
+import {createStore} from 'redux';
+
+const store = createStore(reducer);
+
+```
+
+## setting up redux with components
 
